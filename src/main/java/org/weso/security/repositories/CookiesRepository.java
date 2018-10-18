@@ -1,15 +1,18 @@
 package org.weso.security.repositories;
 
-import java.util.List;
-
 import org.socialsignin.spring.data.dynamodb.repository.EnableScan;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import org.weso.security.types.APIToken;
+import org.weso.security.types.Cookie;
 
 @Repository
 @EnableScan
-public interface APITokenRepository extends CrudRepository<APIToken, String> {
+public interface CookiesRepository extends CrudRepository<Cookie, String> {
 
-	//public List<APIToken> findByToken(String token);
+	/**
+	 * 
+	 * @param token
+	 * @return
+	 */
+	public Cookie findByToken( String token );
 }
