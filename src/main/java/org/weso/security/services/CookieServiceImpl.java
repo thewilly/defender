@@ -43,6 +43,7 @@ public class CookieServiceImpl implements CookieService {
 	@Autowired
 	private CookiesRepository repository;
 	
+	/** The v cache. */
 	private VolatileCache vCache = new VolatileCache();
 
 	/* (non-Javadoc)

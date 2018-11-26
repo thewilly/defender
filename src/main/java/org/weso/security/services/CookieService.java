@@ -37,6 +37,7 @@ public interface CookieService {
 	/**
 	 * Register.
 	 *
+	 * @param token the token
 	 * @param metadata the metadata
 	 */
 	public void register( String token, Map<String, Object> metadata );
