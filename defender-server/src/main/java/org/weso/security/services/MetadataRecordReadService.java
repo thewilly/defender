@@ -20,28 +20,24 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package org.weso.security.repositories;
+package org.weso.security.services;
 
-import org.socialsignin.spring.data.dynamodb.repository.EnableScan;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
-import org.weso.security.types.Cookie;
+import org.weso.security.types.MetadataRecord;
 
 /**
- * The Interface CookiesRepository.
+ * The Interface MetadataRecordReadService.
  *
  * @author Guillermo Facundo Colunga
  * @version 201806081225
  */
-@Repository
-@EnableScan
-public interface CookiesRepository extends CrudRepository<Cookie, String> {
-
+public interface MetadataRecordReadService {
+	
 	/**
-	 * Find by token.
+	 * Gets the data for token.
 	 *
 	 * @param token the token
-	 * @return the cookie
+	 * @return the data for token
 	 */
-	public Cookie findByToken( String token );
+	public MetadataRecord getDataForToken( String token );
+
 }

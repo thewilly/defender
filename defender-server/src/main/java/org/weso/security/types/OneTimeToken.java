@@ -20,26 +20,50 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package org.weso.security;
+package org.weso.security.types;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import java.security.SecureRandom;
 
 /**
- * Hello world!.
+ * The Class OneTimeToken.
  *
  * @author Guillermo Facundo Colunga
  * @version 201806081225
  */
-@SpringBootApplication
-public class Service {
+public class OneTimeToken {
+
+	/** The token. */
+	private String token;
+	
+	/** The random. */
+	private SecureRandom random = new SecureRandom();
+
+	/**
+	 * Instantiates a new one time token.
+	 */
+	public OneTimeToken() {
+		this.token = generateToken();
+	}
+
+	/**
+	 * Generate token.
+	 *
+	 * @return the string
+	 */
+	private synchronized String generateToken() {
+		long longToken = Math.abs( random.nextLong() );
+		String random = Long.toString( longToken, 256 );
+		return random;
+	}
 	
 	/**
-	 * The main method.
+	 * Only one time access token.
 	 *
-	 * @param args the arguments
+	 * @return the string
 	 */
-	public static void main( String[] args ) {
-		SpringApplication.run( Service.class, args );
+	public String value() {
+		String aux = token;
+		token = null;
+		return aux;
 	}
 }

@@ -20,34 +20,34 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package org.weso.security.services;
+package org.weso.security;
 
-import java.util.Map;
-
-import org.weso.security.types.Cookie;
+import org.socialsignin.spring.data.dynamodb.repository.config.EnableDynamoDBRepositories;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.weso.security.config.DynamoDBConfig;
+import org.weso.security.repositories.MetadataRecordRepository;
 
 /**
- * The Interface CookieService.
+ * Hello world!.
  *
  * @author Guillermo Facundo Colunga
  * @version 201806081225
  */
-public interface CookieService {
-
+@SpringBootApplication
+@Configuration
+@EnableDynamoDBRepositories(basePackageClasses = MetadataRecordRepository.class)
+@Import({DynamoDBConfig.class})
+public class StartUp {
+	
 	/**
-	 * Register.
+	 * The main method.
 	 *
-	 * @param token the token
-	 * @param metadata the metadata
+	 * @param args the arguments
 	 */
-	public void register( String token, Map<String, Object> metadata );
-
-	/**
-	 * Gets the cookie.
-	 *
-	 * @param token the token
-	 * @return the cookie
-	 */
-	public Cookie getCookie( String token );
-
+	public static void main( String[] args ) {
+		SpringApplication.run( StartUp.class, args );
+	}
 }

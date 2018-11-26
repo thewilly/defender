@@ -20,58 +20,33 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package org.weso.security.types;
+package org.weso.security.services;
 
 import java.util.Map;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
-
-import lombok.Data;
-
 /**
- * Representation of an token for an API. The token must be unique and it
- * contains an info.
+ * The Interface CookieService.
  *
  * @author Guillermo Facundo Colunga
- * @version 201806032143
- * @since 201806032143
- * @formatter Oviedo Computing Community
+ * @version 201806081225
  */
-
-/* (non-Javadoc)
- * @see java.lang.Object#toString()
- */
-
-/* (non-Javadoc)
- * @see java.lang.Object#toString()
- */
-@Data
-@DynamoDBTable(tableName = "api-tokens")
-public class Cookie {
-	
-	/** The token. */
-	@DynamoDBHashKey
-	public String token;
-
-	/** The metadata. */
-	@DynamoDBAttribute
-	public Map<String, Object> metadata;
+public interface MetadataRecordWriteService {
 
 	/**
-	 * Instantiates a new cookie.
-	 */
-	public Cookie() {}
-	
-	/**
-	 * Instantiates a new cookie.
+	 * Register.
 	 *
 	 * @param token the token
 	 * @param metadata the metadata
 	 */
-	public Cookie( String token, Map<String, Object> metadata ) {
-		this.token = token;
-		this.metadata = metadata;
-	}
+	public String register( );
+	
+	/**
+	 * Updates the information stored at the token.
+	 * 
+	 * @param token
+	 * @param metadata
+	 * @return true if updated, false otherwise.
+	 */
+	public boolean update( String token, Map<String, Object> metadata );
+
 }

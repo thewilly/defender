@@ -1,18 +1,18 @@
-/*
+/* 
  * MIT License
- *
+ * 
  * Copyright (c) 2018 Guillermo Facundo Colunga
- *
+ * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- *
+ * 
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- *
+ * 
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -20,55 +20,44 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package org.weso.security.cache;
+package org.weso.security.types;
 
-import java.util.HashMap;
 import java.util.Map;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
 /**
- * The Class VolatileCache.
+ * Representation of an token for an API. The token must be unique and it
+ * contains an info.
  *
  * @author Guillermo Facundo Colunga
- * @version 201806081225
+ * @version 201806032143
+ * @since 201806032143
+ * @formatter Oviedo Computing Community
  */
-public class VolatileCache {
+@Data
+@AllArgsConstructor
+@DynamoDBTable(tableName = "api-tokens")
+public class MetadataRecord {
+	
+	/** The token. */
+	@DynamoDBHashKey(attributeName = "token")
+	private String token;
 
-	/** The volatile table. */
-	// The table that will store cache data.
-	private Map<String, Map<String, Object>> volatileTable = null;
-
-	/** The clean up time. */
-	// The time between table cleans. NOT IMPLEMENTED YET.
-	//private long cleanUpTime = -1;
-
-	/**
-	 * Instantiates a new volatile cache.
-	 */
-	public VolatileCache() {
-		volatileTable = new HashMap<String, Map<String, Object>>();
-		//cleanUpTime = 1000;
-	}
+	/** The metadata. */
+	@DynamoDBAttribute(attributeName = "metadata")
+	private Map<String, Object> metadata;
 
 	/**
-	 * Gets the metadata.
-	 *
-	 * @param token the token
-	 * @return the metadata
+	 * Instantiates a new metadatarecord.
 	 */
-	public Map<String, Object> getMetadata(String token) {
-		return volatileTable.get( token );
+	public MetadataRecord() {
+		// Default constructor is required by AWS DynamoDB SDK
 	}
-
-	/**
-	 * Save metadata.
-	 *
-	 * @param token the token
-	 * @param metadata the metadata
-	 * @return true, if successful
-	 */
-	public boolean saveMetadata(String token, Map<String, Object> metadata) {
-		volatileTable.put( token, metadata );
-		return true;
-	}
-
+	
 }

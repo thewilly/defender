@@ -20,15 +20,17 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package org.weso.security.services;
+package org.weso.security.services.impl;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.weso.security.cache.VolatileCache;
-import org.weso.security.repositories.CookiesRepository;
-import org.weso.security.types.Cookie;
+import org.weso.security.repositories.MetadataRecordRepository;
+import org.weso.security.services.MetadataRecordWriteService;
+import org.weso.security.types.MetadataRecord;
+import org.weso.security.types.OneTimeToken;
 
 /**
  * The Class CookieServiceImpl.
@@ -37,32 +39,36 @@ import org.weso.security.types.Cookie;
  * @version 201806081225
  */
 @Service
-public class CookieServiceImpl implements CookieService {
+public class MetadataRecordWriteServiceImpl implements MetadataRecordWriteService {
 
 	/** The repository. */
 	@Autowired
-	private CookiesRepository repository;
-	
-	/** The v cache. */
-	private VolatileCache vCache = new VolatileCache();
+	private MetadataRecordRepository repository;
+
 
 	/* (non-Javadoc)
 	 * @see org.weso.security.services.CookieService#register(java.util.HashMap)
 	 */
 	@Override
-	public void register( String token, Map<String, Object> metadata ) {
-		Cookie cookie = new Cookie(token, metadata);
-		vCache.saveMetadata( token, metadata );
-		repository.save( cookie );
+	public String register() {
+		String token = new OneTimeToken().value();
+		MetadataRecord metadataRecord = new MetadataRecord(token, new HashMap<String, Object>());
+		repository.save( metadataRecord );
+		return token;
 	}
-
-	/* (non-Javadoc)
-	 * @see org.weso.security.services.CookieService#getCookie(java.lang.String)
-	 */
+	
+	
 	@Override
-	public Cookie getCookie( String token ) {
-		Cookie cookie = new Cookie(token, vCache.getMetadata( token ));
-		return cookie.metadata != null ? cookie : repository.findByToken( token );
+	public boolean update( String token, Map<String, Object> metadata ) {
+		
+		MetadataRecord temp = repository.findByToken( token );
+		temp.setMetadata( metadata );
+		if(repository.findByToken( token ) == null) {
+			return false;
+		}
+		
+		repository.save( temp );
+		return true;
 	}
 
 }
