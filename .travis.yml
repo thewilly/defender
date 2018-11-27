@@ -1,6 +1,6 @@
 language: java
 jdk:
   - oraclejdk8
-script: ./buildViaTravis.sh
+script: "cd defender-client; mvn test;"
 after_success:
   - bash <(curl -s https://codecov.io/bash)
