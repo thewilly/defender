@@ -20,34 +20,45 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package org.weso.security;
+package org.weso.security.defender.server.types;
 
-import org.socialsignin.spring.data.dynamodb.repository.config.EnableDynamoDBRepositories;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
-import org.weso.security.config.DynamoDBConfig;
-import org.weso.security.repositories.MetadataRecordRepository;
+import org.apache.commons.lang3.RandomStringUtils;
 
 /**
- * Hello world!.
+ * The Class OneTimeToken.
  *
  * @author Guillermo Facundo Colunga
  * @version 201806081225
  */
-@SpringBootApplication
-@Configuration
-@EnableDynamoDBRepositories(basePackageClasses = MetadataRecordRepository.class)
-@Import({DynamoDBConfig.class})
-public class StartUp {
+public class OneTimeToken {
+
+	/** The token. */
+	private String token;
+
+	/**
+	 * Instantiates a new one time token.
+	 */
+	public OneTimeToken() {
+		this.token = generateToken();
+	}
+
+	/**
+	 * Generate token.
+	 *
+	 * @return the string
+	 */
+	private synchronized String generateToken() {
+		return RandomStringUtils.randomAlphanumeric(512);
+	}
 	
 	/**
-	 * The main method.
+	 * Only one time access token.
 	 *
-	 * @param args the arguments
+	 * @return the string
 	 */
-	public static void main( String[] args ) {
-		SpringApplication.run( StartUp.class, args );
+	public String value() {
+		String aux = token;
+		token = null;
+		return aux;
 	}
 }

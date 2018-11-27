@@ -20,47 +20,52 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package org.weso.security;
+package org.weso.security.defender.server.types;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import java.util.Map;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.bson.types.ObjectId;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import lombok.Data;
 
 /**
- * Unit test for simple App.
+ * Representation of an token for an API. The token must be unique and it
+ * contains an info.
  *
  * @author Guillermo Facundo Colunga
- * @version 201806081225
+ * @version 201806032143
+ * @since 201806032143
+ * @formatter Oviedo Computing Community
  */
-public class AppTest 
-    extends TestCase
-{
-    
-    /**
-	 * Create the test case.
-	 *
-	 * @param testName name of the test case
-	 */
-    public AppTest( String testName )
-    {
-        super( testName );
-    }
+@Data
+@Document(collection = "metadata-entries")
+public class MetadataEntry {
+	
+	@Id
+	@JsonIgnore
+	private ObjectId _id;
+	
+	/** The token. */
+	@Indexed
+	private String token;
 
-    /**
-	 * Suite.
-	 *
-	 * @return the suite of tests being tested
-	 */
-    public static Test suite()
-    {
-        return new TestSuite( AppTest.class );
-    }
+	/** The metadata. */
+	private Map<String, Object> metadata;
 
-    /**
-	 * Rigourous Test :-).
+	/**
+	 * Instantiates a new metadatarecord.
 	 */
-    public void testApp()
-    {
-        assertTrue( true );
-    }
+	public MetadataEntry() {
+		// Default constructor is required by AWS DynamoDB SDK
+	}
+	
+	public MetadataEntry(String token, Map<String, Object> metadata) {
+		this.token = token; this.metadata = metadata;
+	}
+	
 }

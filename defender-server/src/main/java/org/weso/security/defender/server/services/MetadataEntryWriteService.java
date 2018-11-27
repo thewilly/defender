@@ -20,50 +20,33 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package org.weso.security.types;
+package org.weso.security.defender.server.services;
 
-import java.security.SecureRandom;
+import java.util.Map;
 
 /**
- * The Class OneTimeToken.
+ * The Interface CookieService.
  *
  * @author Guillermo Facundo Colunga
  * @version 201806081225
  */
-public class OneTimeToken {
-
-	/** The token. */
-	private String token;
-	
-	/** The random. */
-	private SecureRandom random = new SecureRandom();
+public interface MetadataEntryWriteService {
 
 	/**
-	 * Instantiates a new one time token.
-	 */
-	public OneTimeToken() {
-		this.token = generateToken();
-	}
-
-	/**
-	 * Generate token.
+	 * Register.
 	 *
-	 * @return the string
+	 * @param token the token
+	 * @param metadata the metadata
 	 */
-	private synchronized String generateToken() {
-		long longToken = Math.abs( random.nextLong() );
-		String random = Long.toString( longToken, 256 );
-		return random;
-	}
+	public String register( );
 	
 	/**
-	 * Only one time access token.
-	 *
-	 * @return the string
+	 * Updates the information stored at the token.
+	 * 
+	 * @param token
+	 * @param metadata
+	 * @return true if updated, false otherwise.
 	 */
-	public String value() {
-		String aux = token;
-		token = null;
-		return aux;
-	}
+	public boolean update( String token, Map<String, Object> metadata );
+
 }

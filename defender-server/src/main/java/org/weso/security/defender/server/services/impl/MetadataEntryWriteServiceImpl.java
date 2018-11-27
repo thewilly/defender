@@ -20,17 +20,17 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package org.weso.security.services.impl;
+package org.weso.security.defender.server.services.impl;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.weso.security.repositories.MetadataRecordRepository;
-import org.weso.security.services.MetadataRecordWriteService;
-import org.weso.security.types.MetadataRecord;
-import org.weso.security.types.OneTimeToken;
+import org.weso.security.defender.server.repositories.MetadataEntryRepository;
+import org.weso.security.defender.server.services.MetadataEntryWriteService;
+import org.weso.security.defender.server.types.MetadataEntry;
+import org.weso.security.defender.server.types.OneTimeToken;
 
 /**
  * The Class CookieServiceImpl.
@@ -39,11 +39,11 @@ import org.weso.security.types.OneTimeToken;
  * @version 201806081225
  */
 @Service
-public class MetadataRecordWriteServiceImpl implements MetadataRecordWriteService {
+public class MetadataEntryWriteServiceImpl implements MetadataEntryWriteService {
 
 	/** The repository. */
 	@Autowired
-	private MetadataRecordRepository repository;
+	private MetadataEntryRepository repository;
 
 
 	/* (non-Javadoc)
@@ -52,7 +52,7 @@ public class MetadataRecordWriteServiceImpl implements MetadataRecordWriteServic
 	@Override
 	public String register() {
 		String token = new OneTimeToken().value();
-		MetadataRecord metadataRecord = new MetadataRecord(token, new HashMap<String, Object>());
+		MetadataEntry metadataRecord = new MetadataEntry(token, new HashMap<String, Object>());
 		repository.save( metadataRecord );
 		return token;
 	}
@@ -61,7 +61,7 @@ public class MetadataRecordWriteServiceImpl implements MetadataRecordWriteServic
 	@Override
 	public boolean update( String token, Map<String, Object> metadata ) {
 		
-		MetadataRecord temp = repository.findByToken( token );
+		MetadataEntry temp = repository.findByToken( token );
 		temp.setMetadata( metadata );
 		if(repository.findByToken( token ) == null) {
 			return false;

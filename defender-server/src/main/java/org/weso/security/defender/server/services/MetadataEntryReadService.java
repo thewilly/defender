@@ -20,9 +20,9 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package org.weso.security.services;
+package org.weso.security.defender.server.services;
 
-import org.weso.security.types.MetadataRecord;
+import org.weso.security.defender.server.types.MetadataEntry;
 
 /**
  * The Interface MetadataRecordReadService.
@@ -30,7 +30,7 @@ import org.weso.security.types.MetadataRecord;
  * @author Guillermo Facundo Colunga
  * @version 201806081225
  */
-public interface MetadataRecordReadService {
+public interface MetadataEntryReadService {
 	
 	/**
 	 * Gets the data for token.
@@ -38,6 +38,6 @@ public interface MetadataRecordReadService {
 	 * @param token the token
 	 * @return the data for token
 	 */
-	public MetadataRecord getDataForToken( String token );
+	public MetadataEntry getDataForToken( String token );
 
 }

@@ -1,4 +1,4 @@
-package org.weso.security.controllers.impl;
+package org.weso.security.defender.server.controllers.impl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,22 +12,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.weso.security.controllers.MetadataRecordReadController;
-import org.weso.security.services.MetadataRecordReadService;
-import org.weso.security.types.MetadataRecord;
+import org.weso.security.defender.server.controllers.MetadataEntryReadController;
+import org.weso.security.defender.server.services.MetadataEntryReadService;
+import org.weso.security.defender.server.types.MetadataEntry;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
-public class MetadataRecordReadControllerImpl implements MetadataRecordReadController {
+public class MetadataEntryReadControllerImpl implements MetadataEntryReadController {
 	
 	@Autowired
-	private MetadataRecordReadService readService;
+	private MetadataEntryReadService readService;
 
 	@Override
 	@RequestMapping(value = "/",
-			method = RequestMethod.POST,
+			method = RequestMethod.GET,
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> getDataForToken( @RequestBody Map<String, Object> payload ) {
@@ -65,7 +65,7 @@ public class MetadataRecordReadControllerImpl implements MetadataRecordReadContr
 		}
 		
 		// Load the record that has that token...
-		MetadataRecord record = readService.getDataForToken( token );
+		MetadataEntry record = readService.getDataForToken( token );
 		
 		// If no record found...
 		if(record == null) {

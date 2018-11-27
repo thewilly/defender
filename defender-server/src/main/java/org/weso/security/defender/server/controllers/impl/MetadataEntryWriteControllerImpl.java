@@ -1,4 +1,4 @@
-package org.weso.security.controllers.impl;
+package org.weso.security.defender.server.controllers.impl;
 
 
 import java.util.HashMap;
@@ -12,18 +12,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.weso.security.controllers.MetadataRecordWriteController;
-import org.weso.security.services.MetadataRecordWriteService;
-import org.weso.security.types.MetadataRecord;
+import org.weso.security.defender.server.controllers.MetadataEntryWriteController;
+import org.weso.security.defender.server.services.MetadataEntryWriteService;
+import org.weso.security.defender.server.types.MetadataEntry;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
-public class MetadataRecordWriteControllerImpl implements MetadataRecordWriteController {
+public class MetadataEntryWriteControllerImpl implements MetadataEntryWriteController {
 
 	@Autowired
-	private MetadataRecordWriteService writeService;
+	private MetadataEntryWriteService writeService;
 
 	@Override
 	@RequestMapping(value = "/register",
@@ -54,7 +54,7 @@ public class MetadataRecordWriteControllerImpl implements MetadataRecordWriteCon
 		method = RequestMethod.POST,
 		consumes = MediaType.APPLICATION_JSON_VALUE,
 		produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> update( @RequestBody MetadataRecord record ) {
+	public ResponseEntity<String> update( @RequestBody MetadataEntry record ) {
 		
 		log.info( "Updating existing token" );
 
