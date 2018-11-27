@@ -1,5 +1,11 @@
 # Defender cookie and token manager
 
+|| **Architecture** | **Status** |
+|:------:|:-:|:----------:|
+|**Ubuntu Trusty 14.04**|x86_64|[![Build Status](https://travis-ci.org/thewilly/defender.svg?branch=master)](https://travis-ci.org/thewilly/defender)|
+
+
+
 Defender is a micro-service that allows you to store metadata for a given token in dynamodb. It works through REST requests/responses and it is build in java with spring boot.
 
 ## Getting started
