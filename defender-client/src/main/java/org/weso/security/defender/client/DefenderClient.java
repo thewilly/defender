@@ -13,7 +13,7 @@ public final class DefenderClient {
 	}
 	
 	public String requestToken() {
-		return this.connector.requestToquen();
+		return this.connector.requestToken();
 	}
 
 }

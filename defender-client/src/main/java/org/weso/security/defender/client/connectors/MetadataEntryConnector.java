@@ -22,8 +22,9 @@
  */
 package org.weso.security.defender.client.connectors;
 
+import java.util.Map;
+
 import com.mashape.unirest.http.JsonNode;
-import com.sun.javafx.collections.MappingChange.Map;
 
 /**
  * The Interface MetadataEntryConnector.
@@ -38,7 +39,7 @@ public interface MetadataEntryConnector {
 	 *
 	 * @return the string
 	 */
-	public String requestToquen();
+	public String requestToken();
 	
 	/**
 	 * Gets the metadata for token.

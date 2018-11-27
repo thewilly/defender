@@ -1,5 +1,7 @@
 package org.weso.security.defender.client.connectors.impl;
 
+import java.util.Map;
+
 import org.weso.security.defender.client.configuration.DefenderClientConfiguration;
 import org.weso.security.defender.client.connectors.MetadataEntryConnector;
 
@@ -7,7 +9,6 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import com.sun.javafx.collections.MappingChange.Map;
 
 public class MetadataEntryConnectorImpl implements MetadataEntryConnector {
 	
@@ -18,7 +19,7 @@ public class MetadataEntryConnectorImpl implements MetadataEntryConnector {
 	}
 
 	@Override
-	public String requestToquen() {
+	public String requestToken() {
 		
 		try {
 			HttpResponse<JsonNode> response = 

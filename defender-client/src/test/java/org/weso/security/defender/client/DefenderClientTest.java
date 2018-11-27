@@ -1,7 +1,5 @@
 package org.weso.security.defender.client;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 import org.weso.security.defender.client.configuration.impl.DefenderClientConfigurationImpl;
 
