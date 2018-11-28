@@ -1,4 +1,6 @@
-# Defender cookie and token manager
+![logo](https://github.com/thewilly/defender/blob/master/.github/DEFENDER_LOGO.png)
+
+### Welcome to Defender !!!
 
 || **Architecture** | **Status** |
 |:------:|:-:|:----------:|
